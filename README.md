@@ -2,7 +2,7 @@
 
 > 国产自研内存图引擎：图存储、图搜索、图分区、社区发现与语义检索（GraphRAG），零数据库依赖。
 
-GX 是一个**纯 Python 内存图引擎**，从底层实现图数据结构与图算法，为智能体运行时（如 [GNA 图原生智能体](https://github.com/zzzlift/gna)）等上层应用提供高效图基座。
+GX 是一个**纯 Python 内存图引擎**，从底层实现图数据结构与图算法，为智能体运行时（如 [GNA 图原生智能体](https://github.com/liftkkkk/gna)）等上层应用提供高效图基座。
 
 ## 功能
 
@@ -19,7 +19,7 @@ GX 是一个**纯 Python 内存图引擎**，从底层实现图数据结构与�
 ```bash
 pip install gx-engine          # 从 PyPI（发布后）
 # 或从源码
-git clone https://github.com/zzzlift/gx-engine.git
+git clone https://github.com/liftkkkk/gx-engine.git
 cd gx-engine && pip install -e .
 ```
 
@@ -53,7 +53,7 @@ print(sg.retrieve_context("AI 医疗", hops=1))
 
 ## 在 GNA 图原生智能体中作为主图引擎
 
-[GNA](https://github.com/zzzlift/gna) 通过 `GX_PATH` 环境变量指向本仓库目录即可启用 GX 作为其世界模型图的存储底座（未安装时 GNA 自动回退 networkx）：
+[GNA](https://github.com/liftkkkk/gna) 通过 `GX_PATH` 环境变量指向本仓库目录即可启用 GX 作为其世界模型图的存储底座（未安装时 GNA 自动回退 networkx）：
 
 ```cmd
 setx GX_PATH "C:\path\to\gx-engine"
