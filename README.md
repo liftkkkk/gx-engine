@@ -1,67 +1,66 @@
-# GX 图引擎
+# GX Graph Engine
 
-> 国产自研内存图引擎：图存储、图搜索、图分区、社区发现与语义检索（GraphRAG），零数据库依赖。
+**English** | [简体中文](README.zh-CN.md)
 
-GX 是一个**纯 Python 内存图引擎**，从底层实现图数据结构与图算法，为智能体运行时（如 [GNA 图原生智能体](https://github.com/liftkkkk/gna)）等上层应用提供高效图基座。
+> A self-developed, pure-Python in-memory graph engine: graph storage, search, partitioning, community detection and semantic retrieval (GraphRAG) - zero database dependency.
 
-## 功能
+GX is a **pure-Python in-memory graph engine** built from the ground up, providing the graph substrate for agent runtimes such as [GNA - Graph-Native Agent](https://github.com/liftkkkk/gna) and any other application that needs fast, dependency-light graph operations.
 
-- **图数据结构**：`Node` / `Edge` / `Graph`，有向/无向，邻接表 + 名称索引 + O(1) 边查找
-- **图搜索**：缓存化 Dijkstra、BFS/DFS、A*、最短路
-- **图指标**：度分布、中心性、聚集系数
-- **图分区**：谱聚类、Louvain 社区发现、最小割、平衡分区
-- **图可视化**：PyVis 交互式 HTML / Matplotlib 静态图
-- **序列化**：JSON / pickle，批量增删
-- **语义检索（GraphRAG）**：`SemanticGraph` 支持节点向量化、相似节点搜索与多跳上下文组装（可插拔 Embedding：mock / sentence-transformers / OpenAI）
+## Features
 
-## 安装
+- **Graph data structures**: `Node` / `Edge` / `Graph`, directed & undirected, adjacency lists + name index + O(1) edge lookup
+- **Graph search**: cached Dijkstra, BFS/DFS, A*
+- **Graph metrics**: degree distribution, centrality, clustering coefficient
+- **Graph partitioning**: spectral clustering, Louvain community detection, min-cut, balanced partitioning
+- **Visualization**: interactive PyVis HTML / static Matplotlib
+- **Serialization**: JSON / pickle, batch operations
+- **Semantic retrieval (GraphRAG)**: `SemanticGraph` with node embeddings, similar-node search and multi-hop context assembly (pluggable embeddings: mock / sentence-transformers / OpenAI)
+
+## Install
 
 ```bash
-pip install gx-engine          # 从 PyPI（发布后）
-# 或从源码
+pip install gx-engine          # from PyPI (once published)
+# or from source
 git clone https://github.com/liftkkkk/gx-engine.git
 cd gx-engine && pip install -e .
 ```
 
-## 快速上手
+## Quick start
 
 ```python
 from graph_engine import Graph, Node, Edge
 
 g = Graph(directed=True)
-n1 = Node(id="1", name="张三", class_="人物")
-n2 = Node(id="2", name="李四", class_="人物")
-g.add_node(n1); g.add_node(n2)
-g.add_edge_from_st(n1, n2, weight=1.0, label="同事")
+n1 = Node(id="1", name="Alice", class_="person")
+n2 = Node(id="2", name="Bob", class_="person")
+g.add_node(n1)
+g.add_node(n2)
+g.add_edge_from_st(n1, n2, weight=1.0, label="colleague")
 
 for e in g.get_neighbors(n1):
     print(e.target.name, e.label)
 ```
 
-### GraphRAG 语义检索
+### GraphRAG semantic retrieval
 
 ```python
 from graph_rag import SemanticGraph
 
 sg = SemanticGraph()
-sg.add_node_with_text("doc1", "人工智能在医疗领域的应用")
-sg.add_node_with_text("doc2", "深度学习算法的最新进展")
-print(sg.retrieve_context("AI 医疗", hops=1))
+sg.add_node_with_text("doc1", "AI applications in healthcare")
+sg.add_node_with_text("doc2", "Latest advances in deep learning")
+print(sg.retrieve_context("AI healthcare", hops=1))
 ```
 
-更多能力（图指标、分区、可视化）见 `examples/` 与模块内文档。
+More capabilities (metrics, partitioning, visualization) in `examples/` and the module docs.
 
-## 在 GNA 图原生智能体中作为主图引擎
+## As the primary graph engine of GNA
 
-[GNA](https://github.com/liftkkkk/gna) 通过 `GX_PATH` 环境变量指向本仓库目录即可启用 GX 作为其世界模型图的存储底座（未安装时 GNA 自动回退 networkx）：
+[GNA - Graph-Native Agent](https://github.com/liftkkkk/gna) uses GX as its **primary backend** (highest priority): point `GX_PATH` at this repository - or simply `pip install gx-engine` - and GNA auto-detects it at startup. Without GX, GNA falls back to networkx automatically and stays fully functional.
 
-```cmd
-setx GX_PATH "C:\path\to\gx-engine"
-```
+## Dependencies
 
-## 依赖
-
-必选：`networkx`、`numpy`、`scikit-learn`。可选：`pyvis`/`matplotlib`（可视化）、`torch`/`transformers`（真实语义向量）。
+Required: `networkx`, `numpy`, `scikit-learn`. Optional: `pyvis` / `matplotlib` (visualization), `torch` / `transformers` (real semantic embeddings).
 
 ## License
 
@@ -69,19 +68,17 @@ MIT
 
 ---
 
-## ☕ 请作者喝杯咖啡
+## Buy me a coffee
 
-GX 图引擎是我在业余时间独立开发和维护的开源项目，永久免费。
+GX Graph Engine is an open-source project I develop and maintain in my spare time, free forever.
 
-如果它帮你把图存储、检索或智能体的图基座撑起来了，可以考虑请我喝杯咖啡（¥9.9 就够 ☕）——
-你的每一份支持都会直接转化为新功能开发和 bug 修复的动力。
+If it helped you power graph storage, retrieval, or your agent's graph substrate, consider buying me a
+coffee (9.9 CNY is enough). Every bit of support goes straight into new features and bug fixes.
 
 <p align="center">
-  <img src="icon.jpg" alt="赞赏码 - 请作者喝咖啡" width="280">
+  <img src="icon.jpg" alt="Buy me a coffee" width="280">
 </p>
 
-<p align="center"><i>扫码赞赏时可以留言你最想要的功能，我会优先安排 😉</i></p>
+<p align="center"><i>Leave a note with your donation about the feature you want most - I prioritize those ;)</i></p>
 
-**不方便赞赏？** 给项目点个 ⭐ Star、提一个 Issue、或把它分享给需要的人，同样是巨大的支持！
-
----
+**Can't donate?** Starring the repo, opening an Issue, or sharing it with someone who needs it helps just as much!
